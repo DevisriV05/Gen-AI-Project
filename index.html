@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Basics with Generative AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* background-color: #f4f4f4; */
+            background-image: url('yours.jpg'); /* Replace 'your-image.jpg' with the actual image file name */
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            text-align: center;
+        }
+        header {
+            /* background-color: #6200ea;  */
+            color:#02354b;
+            padding: 40px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 36px; /* Set the desired font size */
+            margin: 0; /* Optional: Remove any default margin */
+        }
+        .container {
+            display: flex; /* Use Flexbox for centering */
+            flex-direction: row; /* Keep content in a column layout */
+            justify-content:space-between; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            min-height: 70vh; /* Ensure it takes the full height of the viewport */
+            padding: 20px; 
+            /* background: white; */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start; /* Align options to the left */
+            width: 20%; /* Allocate space for the left section */
+            margin-right: 20px;
+        }
+        .sub-options {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: center;
+            align-items: center; /* Center sub-options vertically */
+            width: 70%; /* Center section width */
+            text-align: center;
+        }
+        .options button,
+        .sub-options button {
+            width: 150px; /* Set a fixed width */
+            height: 50px; /* Set a fixed height */
+            padding: 0; /* Remove extra padding */
+            font-size: 19px; /* Ensure consistent font size */
+            display: flex;
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s; 
+            background-color: transparent; /* Keep background transparent */
+            border:2px solid #046C95 ;  /*2px solid white; Optional: Add a border for better visibility */
+            color:#046C95; /* Ensure text is visible */
+            /* text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);  */
+        }
+        .options button:active,
+        .sub-options button:active {
+            color: white; /* Text color on click */
+        }
+        /*.option {
+            background: #7484FC;  Main options background color
+        } */
+        .option:hover {
+            background: #046C95 ; 
+            /* Main options hover color */
+        }
+        /*.sub-option {
+            background: rgb(46, 168, 208);  Sub-options background color
+        } */
+        .sub-option:hover {
+            background: #046C95; /* Sub-options hover color */
+        }
+        video {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Animation Basics with Generative AI</h1>
+    </header>
+
+    <div class="container">
+        <div class="options">
+            <button class="option" onclick="showSubOptions('traditional_animation')">Traditional Animation</button>
+            <button class="option" onclick="showSubOptions('2d')">2D Animation</button>
+            <button class="option" onclick="showSubOptions('3d')">3D Animation</button>
+            <button class="option" onclick="showSubOptions('stop_motion')">Stop Motion</button>
+        </div>
+
+        <div class="sub-options" id="sub-options" style="display: none;"></div>
+        <video id="video-player" controls style="display: none;"></video>
+    </div>
+
+    <script>
+    //     document.addEventListener('DOMContentLoaded', () => {
+    //     const optionButtons = document.querySelectorAll('.options button');
+    //     const subOptionButtons = document.querySelectorAll('.sub-options button');
+        
+    //     // Function to handle text color change
+    //     function handleButtonClick(event) {
+    //         // Reset text color for all buttons
+    //         optionButtons.forEach(btn => btn.style.color = '#046C95'); // Default color
+    //         subOptionButtons.forEach(btn => btn.style.color = '#046C95'); // Default color
+
+    //         // Change clicked button text color to white
+    //         event.target.style.color = 'white';
+    //     }
+
+    //     // Add event listeners for option buttons
+    //     optionButtons.forEach(button => {
+    //         button.addEventListener('click', handleButtonClick);
+    //     });
+    // });
+    document.addEventListener('DOMContentLoaded', () => {
+        const optionButtons = document.querySelectorAll('.options button');
+        let lastClickedButton = null; // Track the last clicked button
+
+        function handleButtonClick(event) {
+            // Reset text color for all buttons except the clicked one
+            optionButtons.forEach(btn => {
+                if (btn !== event.target) {
+                    btn.style.color = '#046C95'; // Default color
+                }
+            });
+
+            // Persist the clicked button's text color
+            event.target.style.color = 'white';
+            lastClickedButton = event.target; // Update the last clicked button
+        }
+
+        optionButtons.forEach(button => {
+            button.addEventListener('click', handleButtonClick);
+
+            // Handle hover to revert color if not the last clicked button
+            button.addEventListener('mouseenter', () => {
+                if (button !== lastClickedButton) {
+                    button.style.color = 'white';
+                }
+            });
+            button.addEventListener('mouseleave', () => {
+                if (button !== lastClickedButton) {
+                    button.style.color = '#046C95';
+                }
+            });
+        });
+    });
+        function showSubOptions(type) {
+            const subOptionsDiv = document.getElementById('sub-options');
+            const videoPlayer = document.getElementById('video-player');
+            videoPlayer.style.display = 'none';
+            subOptionsDiv.style.display = 'flex';
+
+            if (type === 'traditional_animation') {
+                subOptionsDiv.innerHTML = `
+                    <button class="sub-option" onclick="playVideo('thelionking.mp4')">The Lion King</button>
+                    <button class="sub-option" onclick="playVideo('snowwhite.mp4')">Snow White</button>
+                    <button class="sub-option" onclick="playVideo('cindrella.mp4')">Cinderella</button>
+                `;
+            } else if (type === '2d') {
+                subOptionsDiv.innerHTML = `
+                    <button class="sub-option" onclick="playVideo('line_art.mp4')">Line Art</button>
+                    <button class="sub-option" onclick="playVideo('girl.mp4')">Girl</button>
+                    <button class="sub-option" onclick="playVideo('boy.mp4')">Boy</button>
+                `;
+            } else if (type === '3d') {
+                subOptionsDiv.innerHTML = `
+                    <button class="sub-option" onclick="playVideo('speaking.mp4')">Newyear</button>
+                    <button class="sub-option" onclick="playVideo('flying.mp4')">Flying Man</button>
+                `;
+            } else if (type === 'stop_motion') {
+                subOptionsDiv.innerHTML = `
+                    <button class="sub-option" onclick="playVideo('Angry.mp4')">Angry girl</button>
+                    <button class="sub-option" onclick="playVideo('night.mp4')">The Nightmare before Christmas</button>
+                    <button class="sub-option" onclick="playVideo('coraline.mp4')">Coraline</button>
+                `;
+        }
+    }
+        function playVideo(videoFile) {
+            window.location.href = `video_player.html?video=${encodeURIComponent(videoFile)}`;
+        }
+    </script>
+</body>
+</html>
