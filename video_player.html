@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* background-color: #f4f4f4; */
+            background-image: url('yours.jpg'); /* Replace 'your-image.jpg' with the actual image file name */
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            text-align: center;
+        }
+        header { 
+            background-color: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        video {
+            width: 70%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+            object-fit: cover;
+        }
+        button {
+            width: 150px; /* Set a fixed width */
+            height: 50px; /* Set a fixed height */
+            padding: 0; /* Remove extra padding */
+            font-size: 19px; /* Ensure consistent font size */
+            display: flex;
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s;
+            background-color: transparent; /* Transparent background */
+            border: 2px solid #046C95; /* Ensure this rule is correct */
+            color: #ffffff; /* Text color */
+        }
+
+            /* padding: 10px 20px;
+            background-color:transparent;
+            color:#203e4b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px; */
+        button:hover {
+            background-color:#046C95;
+        }
+    </style>
+</head>
+<body>
+    <video id="video-player" controls></video>
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+        // Get the video file name from the URL query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoFile = urlParams.get('video');
+
+        // Set the video source
+        const videoPlayer = document.getElementById('video-player');
+        if (videoFile) {
+            videoPlayer.src = videoFile;
+        } else {
+            videoPlayer.innerHTML = 'No video selected.';
+        }
+
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
